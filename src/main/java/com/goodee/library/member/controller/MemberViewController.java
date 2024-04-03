@@ -17,4 +17,10 @@ public class MemberViewController {
 		return "member/join";
 	}
 	
+	@GetMapping("/login")
+	public String openLogin() {
+		LOGGER.info("로그인 화면으로 이동!");
+		return "member/login";
+	}
+	
 }

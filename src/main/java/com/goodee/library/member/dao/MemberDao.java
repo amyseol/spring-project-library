@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.goodee.library.member.dto.MemberDto;
@@ -18,6 +19,8 @@ public class MemberDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	private final String NAMESPACE = "com.goodee.library.memberMapper.";
 	
@@ -35,11 +38,33 @@ public class MemberDao {
 		return result;
 	}
 	
-	// return 값을 Integer 로 하면 null 값을 받아온다.
 	public int createMember(MemberDto memberDto) {
+		LOGGER.info("회원정보 데이터베이스 추가");
 		int result = 0;
-		
+		try {
+			memberDto.setM_pw(passwordEncoder.encode(memberDto.getM_pw()));
+			result = sqlSession.insert(NAMESPACE+"createMember",memberDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
+	}
+	
+	public MemberDto selectMember(MemberDto memberDto) {
+		LOGGER.info("아이디 기준으로 멤버 조회");
+		MemberDto loginDto = new MemberDto();
+		try {
+			loginDto = sqlSession.selectOne(NAMESPACE+"selectMember", memberDto.getM_id());
+			if(loginDto != null) {
+				// 비밀번호 일치여부 확인
+				if(!passwordEncoder.matches(memberDto.getM_pw(), loginDto.getM_pw())) {
+					loginDto = null;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return loginDto;
 	}
 	
 }

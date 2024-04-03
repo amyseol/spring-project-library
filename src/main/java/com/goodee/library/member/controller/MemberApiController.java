@@ -1,6 +1,9 @@
 package com.goodee.library.member.controller;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,11 +25,18 @@ public class MemberApiController {
 	@Autowired
 	MemberService memberService;
 	
-	@PostMapping("/join")
 	@ResponseBody
+	@PostMapping("/join")
 	public Map<String, String> joinMember(@RequestBody MemberDto memberDto) {
 		LOGGER.info("회원가입 기능");
 		return memberService.createMember(memberDto);
+	}
+	
+	@ResponseBody
+	@PostMapping("/login")
+	public Map<String, String> login(@RequestBody MemberDto memberDto, HttpSession session) {
+		LOGGER.info("로그인 기능");
+		return memberService.loginMember(memberDto, session);
 	}
 	
 }
