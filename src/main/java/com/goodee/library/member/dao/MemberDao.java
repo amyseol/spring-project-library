@@ -2,6 +2,9 @@ package com.goodee.library.member.dao;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,20 +54,50 @@ public class MemberDao {
 	}
 	
 	public MemberDto selectMember(MemberDto memberDto) {
-		LOGGER.info("아이디 기준으로 멤버 조회");
-		MemberDto loginDto = new MemberDto();
+		LOGGER.info("아이디 기준 멤버 1명 조회");
+		MemberDto loginMember = new MemberDto();
 		try {
-			loginDto = sqlSession.selectOne(NAMESPACE+"selectMember", memberDto.getM_id());
-			if(loginDto != null) {
-				// 비밀번호 일치여부 확인
-				if(!passwordEncoder.matches(memberDto.getM_pw(), loginDto.getM_pw())) {
-					loginDto = null;
-				}
+			loginMember = sqlSession.selectOne(NAMESPACE+"selectMember", memberDto.getM_id());
+			if(loginMember!= null && passwordEncoder.matches(memberDto.getM_pw(), loginMember.getM_id())) {
+				loginMember = null;
 			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return loginMember;
+	}
+
+	public List<MemberDto> selectMemberAll() {
+		LOGGER.info("회원 목록 조회");
+		List<MemberDto> resultList = new ArrayList<MemberDto>();
+		try {
+			resultList = sqlSession.selectList(NAMESPACE+"selectMemberAll");
+		}catch(Exception e) {
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			LOGGER.error(errors.toString());
+		}
+		return resultList;
+	}
+
+	public int updateMember(MemberDto memberDto) {
+		int success = 0;
+		try {
+			success = sqlSession.update(NAMESPACE+"updateMember", memberDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return loginDto;
+		return success;
+	}
+
+	public MemberDto selectUpdateMember(MemberDto memberDto) {
+		MemberDto loginMember = new MemberDto();
+		try {
+			loginMember = sqlSession.selectOne(NAMESPACE+"selectNewMember", memberDto.getM_no());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return loginMember;
 	}
 	
 }
