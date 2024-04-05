@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.goodee.library.memberMapper">
+	
 	<select id="idDoubleCheck" parameterType="String" resultType="int">
 			SELECT count(*) FROM tbl_member 
 			<where>
@@ -33,11 +34,19 @@
 			</where>
 	</update>
 	
-		<select id="selectNewMember" parameterType="long" resultType="com.goodee.library.member.dto.MemberDto">
+	<select id="selectMemberByNo" parameterType="long" resultType="com.goodee.library.member.dto.MemberDto">
 		SELECT * FROM tbl_member 
 			<where>
 				m_no = #{m_no}
 			</where>
 	</select>
+	
+	<update id="deleteMember" parameterType="long">
+		UPDATE tbl_member SET
+			m_flag = 'N'
+			<where>
+				m_no = #{m_no}
+			</where>
+	</update>
 	
 </mapper>

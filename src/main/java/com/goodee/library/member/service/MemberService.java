@@ -1,6 +1,5 @@
 package com.goodee.library.member.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,9 +48,14 @@ public class MemberService {
 		MemberDto loginMember = memberDao.selectMember(memberDto);
 		
 		if(loginMember != null) {
-			session.setAttribute("loginMember", loginMember);
-			map.put("res_code", "200");
-			map.put("res_msg", loginMember.getM_name()+"님, 환영합니다.");
+			if(loginMember.getM_flag().equals("Y")) {
+				session.setAttribute("loginMember", loginMember);
+				map.put("res_code", "200");
+				map.put("res_msg", loginMember.getM_name()+"님, 환영합니다.");
+			}else {
+				map.put("res_code", "409");
+				map.put("res_msg", "이미 탈퇴한 회원입니다.");
+			}
 		}
 		return map;
 	}
@@ -64,16 +68,28 @@ public class MemberService {
 	public Map<String, String> updateMember(MemberDto memberDto, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("res_code", "400");
-		map.put("res_msg", "수정 실패!");	
-
-		int success = memberDao.updateMember(memberDto);
-		if(success > 0) {
+		map.put("res_msg", "회원 정보 수정중 오류가 발생하였습니다.");
+		
+		if(memberDao.updateMember(memberDto) > 0) {
 			LOGGER.info("DB 수정 성공!");
-			MemberDto updateList = memberDao.selectUpdateMember(memberDto);
-			session.setAttribute("loginMember", updateList);
+			MemberDto updateMemberDto = memberDao.selectMemberByNo(memberDto);
+			session.setAttribute("loginMember", updateMemberDto);
 			session.setMaxInactiveInterval(60*30);
 			map.put("res_code", "200");
-			map.put("res_msg", "수정 완료!");	
+			map.put("res_msg", "회원 정보가 수정되었습니다.");	
+		}
+		return map;
+	}
+
+	public Map<String, String> deleteMember(long memberNo, HttpSession session) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("res_code", "400");
+		map.put("res_msg", "회원 탈퇴 중 오류가 발생하였습니다.");
+		
+		if(memberDao.deleteMember(memberNo) > 0) {	
+			map.put("res_code", "200");
+			map.put("res_msg", "탈퇴가 완료되었습니다.");	
+			session.invalidate();
 		}
 		return map;
 	}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goodee.library.bookMapper">
+	
+	<insert id="creatBook" parameterType="com.goodee.library.book.dto.BookDto">
+		INSERT INTO tbl_book(b_thumbnail, b_name, b_writer)
+			VALUES(#{b_thumbnail}, #{b_name}, #{b_writer})
+	</insert>
+
+</mapper>
