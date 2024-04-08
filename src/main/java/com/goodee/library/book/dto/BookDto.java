@@ -1,12 +1,13 @@
 package com.goodee.library.book.dto;
 
 import java.sql.Date;
+import com.goodee.library.book.util.Paging;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class BookDto {
+public class BookDto extends Paging {
 	
 	private int b_no;
 	private String b_thumbnail;

@@ -13,6 +13,8 @@ public class UploadFileService {
 	private static final Logger LOGGER = 
 			LogManager.getLogger(UploadFileService.class);
 	
+	private static String FILE_PATH= "C:\\library\\upload\\";
+	
 	public String upload(MultipartFile file) {
 		LOGGER.info("파일을 서버에 저장");
 		boolean result = false;
@@ -23,10 +25,11 @@ public class UploadFileService {
 		UUID uuid = UUID.randomUUID(); // 중복되지 않은 값 
 		String newFileName = uuid.toString().replaceAll("-", ""); // - 있으면 공백으로 수정 
 		
-		File savedFile = new File("C:\\library\\upload\\" + newFileName + extension); // 해당 경로에 비어있는 파일 객체 생성 
+		File savedFile = new File(FILE_PATH + newFileName + extension); // 해당 경로에 비어있는 파일 객체 생성 
 		if(!savedFile.exists()) {
 			savedFile.mkdirs(); // make directory 리눅스 명령어
 		}
+		
 		try {
 			file.transferTo(savedFile); // 비어있는 파일 객체에 가져온 파일 넣기
 			result = true;

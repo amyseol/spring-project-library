@@ -1,6 +1,7 @@
 package com.goodee.library.book.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,19 @@ public class BookService {
 			map.put("res_code", "200");
 			map.put("res_msg", "도서 등록에 성공했습니다.");
 		}
-		
 		return map;
+	}
+
+	public int selectBookCount(String searchBookName) {
+		return bookDao.selectBookCount(searchBookName);
+	}
+
+	public List<BookDto> selectBookList(BookDto bookDto) {
+		return bookDao.selectBookList(bookDto);
+	}
+
+	public List<BookDto> selectBookListToday() {
+		return bookDao.selectBookListToday();
 	}
 	
 }

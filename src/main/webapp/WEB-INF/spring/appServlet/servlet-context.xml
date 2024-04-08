@@ -33,4 +33,7 @@
 			<beans:bean class="com.goodee.library.member.util.MemberLoginInterceptor"/>
 		</interceptor>
 	</interceptors>
+	
+	<resources mapping="/libraryUploadImg/**" location="file:///C:/library/upload/"/>
+	
 </beans:beans>
