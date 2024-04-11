@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -82,6 +83,25 @@ public class BookApiController {
 			map.put("res_msg", "도서 정보 수정이 완료되었습니다.");
 		}
 		
+		return map;
+	}
+	
+	
+	@DeleteMapping("/book/{b_no}")
+	@ResponseBody
+	public Map<String, String> deleteBook(@PathVariable("b_no") int b_no, 
+			@RequestBody String deleteThumbnail) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("res_code", "404");
+		map.put("res_msg", "도서 삭제 중 오류가 발생했습니다.");
+		
+		if(deleteThumbnail != null) {
+			if(bookService.deleteBook(b_no) > 0) {
+				uploadFileService.deleteOriginalFile(deleteThumbnail);
+				map.put("res_code", "200");
+				map.put("res_msg", "도서 삭제가 완료되었습니다.");
+			}
+		}
 		return map;
 	}
 	

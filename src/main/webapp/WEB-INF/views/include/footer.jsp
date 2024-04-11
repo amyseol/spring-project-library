@@ -24,7 +24,7 @@
 					<div class="footer">
 						<h3 class="footer-title">Member</h3>
 						<ul class="footer-links">
-							<li><a href="#">List</a></li>
+							<li><a href="/member">List</a></li>
 						</ul>
 					</div>
 				</div>
@@ -35,8 +35,8 @@
 					<div class="footer">
 						<h3 class="footer-title">Book</h3>
 						<ul class="footer-links">
-							<li><a href="#">List</a></li>
-							<li><a href="#">Add Book</a></li>
+							<li><a href="/book">List</a></li>
+							<li><a href="/book/add">Add Book</a></li>
 						</ul>
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 					<div class="footer">
 						<h3 class="footer-title">Service</h3>
 						<ul class="footer-links">
-							<li><a href="#">My Account</a></li>
+							<li><a href="/member/${loginMember.m_no}">My Account</a></li>
 							<li><a href="#">Help</a></li>
 						</ul>
 					</div>

@@ -21,8 +21,8 @@
 		<div class="container">
 			<ul class="header-links pull-left">
 				<li><a href="#"><i class="fa fa-phone"></i> +85-2-818-7950</a></li>
-				<li><a href="#"><i class="fa fa-envelope-o"></i>kgn@goodee.co.kr</a></li>
-				<li><a href="#"><i class="fa fa-map-marker"></i>95, Gasan digital 2-ro, Geumcheon-gu, Seoul, Republic of Korea</a></li>
+				<li><a href="#" id="sendEmail"><i class="fa fa-envelope-o"></i>kgn@goodee.co.kr</a></li>
+				<li><a href="#" id="searchAddress"><i class="fa fa-map-marker"></i>95, Gasan digital 2-ro, Geumcheon-gu, Seoul, Republic of Korea</a></li>
 			</ul>
 			<ul class="header-links pull-right">
 			   <c:choose>
@@ -93,4 +93,18 @@
          }            
       })   
    }
+   
+   document.getElementById("sendEmail").addEventListener("click", function(event) {
+	    event.preventDefault(); 
+	    var emailAddress = this.textContent; 
+	    window.location.href = "mailto:" + emailAddress;
+	});
+   
+   
+   document.getElementById("searchAddress").addEventListener("click", function(event) {
+	    event.preventDefault(); 
+	    var address = this.textContent;
+	    var searchUrl = "https://www.google.com/search?q=" + encodeURIComponent(address);
+	    window.open(searchUrl, "_blank");
+	});
 </script>

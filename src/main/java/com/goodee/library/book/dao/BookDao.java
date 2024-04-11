@@ -86,5 +86,15 @@ public class BookDao {
 		}
 		return updateSuccess;
 	}
-	
+
+	public int deleteBook(int b_no) {
+		int deleteSuccess = 0;
+		try {
+			deleteSuccess = sqlSession.delete(NAMESPACE+"deleteBook", b_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return deleteSuccess;
+	}
+
 }

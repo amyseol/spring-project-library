@@ -25,7 +25,7 @@
 						<!-- SignUp Form -->
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">Edit Info</h3>
+								<h3 class="title">my account</h3>
 							</div>
 							<form id="editFrm" name="edit_member_form" >
 								<input type="hidden" name="m_no" value="${loginMember.m_no}">

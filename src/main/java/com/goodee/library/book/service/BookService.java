@@ -45,5 +45,9 @@ public class BookService {
 	public int editBookDetail(BookDto bookDto) {
 		return bookDao.editBookDetail(bookDto);
 	}
+
+	public int deleteBook(int b_no) {
+		return bookDao.deleteBook(b_no);
+	}
 	
 }
