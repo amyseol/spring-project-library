@@ -58,13 +58,33 @@ public class BookDao {
 
 	public List<BookDto> selectBookListToday() {
 		LOGGER.info("오늘 등록한 도서 목록 조회");
-		List<BookDto> bookList = new ArrayList<BookDto>();
+		List<BookDto> bookListToday = new ArrayList<BookDto>();
 		try {
-			bookList = sqlSession.selectList(NAMESPACE+"selectBookListToday");
+			bookListToday = sqlSession.selectList(NAMESPACE+"selectBookListToday");
 		} catch (Exception e) {
 	        e.printStackTrace();			
 		}
-		return bookList;
+		return bookListToday;
+	}
+
+	public BookDto selectBookDetail(int b_no) {
+		BookDto bookDto = new BookDto();
+		try {
+			bookDto = sqlSession.selectOne(NAMESPACE+"selectBookDetail", b_no);
+		} catch (Exception e) {
+	        e.printStackTrace();			
+		}
+		return bookDto;
+	}
+
+	public int editBookDetail(BookDto bookDto) {
+		int updateSuccess = 0;
+		try {
+			updateSuccess = sqlSession.update(NAMESPACE+"editBookDetail", bookDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return updateSuccess;
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.goodee.library.book.dto.BookDto;
@@ -22,16 +23,11 @@ public class HomeController {
 	BookService bookService;
 	
 	@GetMapping({"","/"})
-	public String home() {
+	public String home(Model model) {
 		LOGGER.info("도서관 관리 시스템");
-		// 오늘 날짜의 도서 목록 조회
-		List<BookDto> bookList = new ArrayList<BookDto>();
-		bookList = bookService.selectBookListToday();
-		
-		for(BookDto dto : bookList) {
-			LOGGER.info(dto.getB_name());
-		}
-
+		List<BookDto> bookListToday = new ArrayList<BookDto>();
+		bookListToday = bookService.selectBookListToday();
+		model.addAttribute("newBookList", bookListToday);
 		return "home";
 	}
 	

@@ -1,6 +1,7 @@
 package com.goodee.library.book.util;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,7 @@ public class UploadFileService {
 	private static final Logger LOGGER = 
 			LogManager.getLogger(UploadFileService.class);
 	
-	private static String FILE_PATH= "C:\\library\\upload\\";
+	private String FILE_PATH= "C:\\library\\upload\\";
 	
 	public String upload(MultipartFile file) {
 		LOGGER.info("파일을 서버에 저장");
@@ -42,6 +43,21 @@ public class UploadFileService {
 		}
 		
 		return null;
+	}
+
+	
+	public boolean deleteOriginalFile(String deleteThumbnail) {
+		boolean result = false;
+		try {
+			String srcFileName = URLDecoder.decode(deleteThumbnail, "UTF-8");
+			File file = new File(FILE_PATH + srcFileName);
+			if(file.exists()) {
+				result = file.delete(); 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 }

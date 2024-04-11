@@ -37,5 +37,13 @@ public class BookService {
 	public List<BookDto> selectBookListToday() {
 		return bookDao.selectBookListToday();
 	}
+
+	public BookDto selectBookDetail(int b_no) {
+		return bookDao.selectBookDetail(b_no);
+	}
+
+	public int editBookDetail(BookDto bookDto) {
+		return bookDao.editBookDetail(bookDto);
+	}
 	
 }
