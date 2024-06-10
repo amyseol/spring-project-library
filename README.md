@@ -33,20 +33,3 @@
 <img src="https://img.shields.io/badge/Eclipse-FE7A16.svg?style=flat-square&logo=Eclipse&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=flat-square&logo=apache-tomcat&logoColor=black"> &nbsp;
 
-### DB구성
-<img width="461" alt="ERD" src="https://github.com/devkgn/guestbook/assets/149357993/12db5177-92a1-4430-82c6-b51f0998e0df">
-
-## 사용방법
-### 주소
-```
-# 192.168.0.XXX/library_pjt
-```
-### 계정
-- ID : admin
-- PW : 1234
-
-## 지원
-구디 도서관 프로젝트에서 오류를 발견하실 경우 아래 메일로 연락주시면 감사하겠습니다. 
-<p align="left">
-  <a href="mailto:tjfdbfls@gmail.com"><img src="https://img.shields.io/badge/Gmail-D0A9F5?style=flat-square&logo=Gmail&logoColor=white&link=mailto:devkgn@gmail.com"/></a>
-</p>
